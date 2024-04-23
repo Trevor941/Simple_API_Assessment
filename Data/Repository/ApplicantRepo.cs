@@ -54,6 +54,10 @@ namespace Simple_API_Assessment.Data.Repository
         {
 
             var applicant = await GetSingleApplicant(Id);
+            if(applicant == null)
+            {
+                return "not found";
+            }
             _dbContext.Remove(applicant);
             await _dbContext.SaveChangesAsync();
             return "item deleted successfully";

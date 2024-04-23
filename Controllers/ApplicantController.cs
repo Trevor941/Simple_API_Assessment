@@ -26,6 +26,10 @@ namespace Simple_API_Assessment.Controllers
         public async Task<ActionResult<Applicant>> GetAllApplicants(int Id)
         {
             var applicant = await _repository.GetSingleApplicant(Id);
+            if (applicant == null)
+            {
+                return StatusCode(404, "Applicant not found");
+            }
             return Ok(applicant);
         }
 
@@ -51,6 +55,11 @@ namespace Simple_API_Assessment.Controllers
         public async Task<ActionResult<string>> RemoveApplicant(int Id)
         {
             var message = await _repository.DeleteApplicant(Id);
+            if(message == "not found")
+            {
+                return BadRequest("trying to delete an applicant that doesnt exist.");
+            }
+            
             return Ok(message);
         }
     }
